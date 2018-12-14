@@ -11790,11 +11790,21 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Introduction-to-the-Problem">Introduction to the Problem<a class="anchor-link" href="#Introduction-to-the-Problem">&#182;</a></h2><h3 id="Imagine...">Imagine...<a class="anchor-link" href="#Imagine...">&#182;</a></h3><p>You're a bright, ambitious high school senior preparing to enter college. For years you've had a fascination with computers and the exciting research surrounding them. In short, you want to study and contribute to the field of computer science. But where should you study? Which Universities have research you're interested in? Does research influence the computer science education? What should you do?</p>
+<h2 id="1.-Introduction-to-the-Problem">1. Introduction to the Problem<a class="anchor-link" href="#1.-Introduction-to-the-Problem">&#182;</a></h2><h3 id="Imagine...">Imagine...<a class="anchor-link" href="#Imagine...">&#182;</a></h3><p>You're a bright, ambitious high school senior preparing to enter college. For years you've had a fascination with computers and the exciting research surrounding them. In short, you want to study and contribute to the field of computer science. But where should you study? Which Universities have research you're interested in? Does research influence the computer science education? What should you do?</p>
 <h3 id="The-Problem">The Problem<a class="anchor-link" href="#The-Problem">&#182;</a></h3><p>There are numerous resources to determine top computer science programs, one of the most famous being U.S. News and World Report's. What factors does U.S. News and World Report use when determining rankings? How is research factored into that? And that is what we aim to find out.<br><br>
 <strong>How does research quantitiy and topic influence the rankings of computer science school?</strong><br><br>
 This problem is important for for serveral reasons. One, choosing a university is an extremely important decision, one which requires as much information as possible. Two, one gets out of university what they put in. In other words, if a student seeks an academic track, they would prefer a university with an emphasis on research and publication. If they seek a professional track, these metrics matter less. And three, knowing a schools area of research (and how prevalent their research is in the field) is important when making a decision. A systems research oriented student would not be university searching with the same criteria as a data science oriented student looking to work in industry.</p>
 <h3 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h3><p>To answer these questions and help students make more informed univertsity decisions, we will be analyzing data from csrankings.com in terms of their rankings as well as their data on computer science research from the past ten years. There have been previous analyses on faculty number and rankings (<a href="https://krixly.github.io/">https://krixly.github.io/</a>) however this projects seeks to find correlations between research quantity and area on rankings.</p>
+<h4 id="Alterior-Motives?">Alterior Motives?<a class="anchor-link" href="#Alterior-Motives?">&#182;</a></h4><p>This analysis also doubles as a tutorial in data science, particularly the data sceience pipeline. Data science seeks to analyze data to extract meaning. In our case, this meaning comes in the form of understanding how research affects CS rankings. The pipeline we use includes: Data collection and organization, exploratory data analysis, hypothesis testing and machine learning, and finally interpretation and meaning explanation. To aid in this understanding, we have included extra resources in the form of links and definitions.<br>For more information on data science in general, visit: <a href="https://en.wikipedia.org/wiki/Data_science">https://en.wikipedia.org/wiki/Data_science</a><br>For more information on the data science pipeline, visit: <a href="https://towardsdatascience.com/a-beginners-guide-to-the-data-science-pipeline-a4904b2d8ad3">https://towardsdatascience.com/a-beginners-guide-to-the-data-science-pipeline-a4904b2d8ad3</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Data-Collection">2. Data Collection<a class="anchor-link" href="#2.-Data-Collection">&#182;</a></h2><p>The first step in the data science pipeline is data collection and organization. We scraped (Def: data scraping- using code to extract data from another program) data from <a href="https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv">https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv</a> . An important aspect of data scraping is its human readability. A csv file (Def: CSV- comma separated values) organizes rows of a data table by separating each data entry with a comma. We read our data into a python data structure called a dataframe in order to more easily work with the data.</p>
 
 </div>
 </div>
@@ -11854,8 +11864,8 @@ This problem is important for for serveral reasons. One, choosing a university i
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">professor_publication_info_csv</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv&quot;</span>
 <span class="n">professor_publication_info</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">professor_publication_info_csv</span><span class="p">)</span>
 <span class="n">professor_publication_info</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="c1">#professor_publication_info.drop(&#39;area&#39;,axis = 1, inplace = True)</span>
-<span class="n">professor_publication_info</span>
+<span class="c1">#professor_publication_info.drop(&#39;area&#39;,axis = 1, inplace = True) #left this in because it will be important</span>
+<span class="n">professor_publication_info</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12404,20 +12414,11 @@ This problem is important for for serveral reasons. One, choosing a university i
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">undergraduate_number_cs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;undergraduate_cs_research.csv&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">top20_US_Universities</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;dept&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;Carnegie Mellon University&#39;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#</span>
+<span class="n">undergraduate_number_cs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;undergraduate_cs_research.csv&quot;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">top20_US_Universities</span> <span class="o">=</span> \
+<span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;dept&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;Carnegie Mellon University&#39;</span>
                                                                                             <span class="p">,</span><span class="s1">&#39;Massachusetts Institute of Technology&#39;</span>
                                                                                            <span class="p">,</span><span class="s1">&#39;University of California - Berkeley&#39;</span>
                                                                                            <span class="p">,</span><span class="s1">&#39;Stanford University&#39;</span>
@@ -12446,13 +12447,26 @@ This problem is important for for serveral reasons. One, choosing a university i
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
 <div class="output_wrapper">
 <div class="output">
 
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[49]:</div>
+<div class="prompt output_prompt">Out[11]:</div>
 
 
 
