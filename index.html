@@ -11792,10 +11792,10 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="1.-Introduction-to-the-Problem">1. Introduction to the Problem<a class="anchor-link" href="#1.-Introduction-to-the-Problem">&#182;</a></h2><h3 id="Imagine...">Imagine...<a class="anchor-link" href="#Imagine...">&#182;</a></h3><p>You're a bright, ambitious high school senior preparing to enter college. For years you've had a fascination with computers and the exciting research surrounding them. In short, you want to study and contribute to the field of computer science. But where should you study? Which Universities have research you're interested in? Does research influence the computer science education? What should you do?</p>
 <h3 id="The-Problem">The Problem<a class="anchor-link" href="#The-Problem">&#182;</a></h3><p>There are numerous resources to determine top computer science programs, one of the most famous being U.S. News and World Report's. What factors does U.S. News and World Report use when determining rankings? How is research factored into that? And that is what we aim to find out.<br><br>
-<strong>How does research quantitiy and topic influence the rankings of computer science school?</strong><br><br>
-This problem is important for for serveral reasons. One, choosing a university is an extremely important decision, one which requires as much information as possible. Two, one gets out of university what they put in. In other words, if a student seeks an academic track, they would prefer a university with an emphasis on research and publication. If they seek a professional track, these metrics matter less. And three, knowing a schools area of research (and how prevalent their research is in the field) is important when making a decision. A systems research oriented student would not be university searching with the same criteria as a data science oriented student looking to work in industry.</p>
-<h3 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h3><p>To answer these questions and help students make more informed univertsity decisions, we will be analyzing data from csrankings.com in terms of their rankings as well as their data on computer science research from the past ten years. There have been previous analyses on faculty number and rankings (<a href="https://krixly.github.io/">https://krixly.github.io/</a>) however this projects seeks to find correlations between research quantity and area on rankings.</p>
-<h4 id="Alterior-Motives?">Alterior Motives?<a class="anchor-link" href="#Alterior-Motives?">&#182;</a></h4><p>This analysis also doubles as a tutorial in data science, particularly the data sceience pipeline. Data science seeks to analyze data to extract meaning. In our case, this meaning comes in the form of understanding how research affects CS rankings. The pipeline we use includes: Data collection and organization, exploratory data analysis, hypothesis testing and machine learning, and finally interpretation and meaning explanation. To aid in this understanding, we have included extra resources in the form of links and definitions.<br>For more information on data science in general, visit: <a href="https://en.wikipedia.org/wiki/Data_science">https://en.wikipedia.org/wiki/Data_science</a><br>For more information on the data science pipeline, visit: <a href="https://towardsdatascience.com/a-beginners-guide-to-the-data-science-pipeline-a4904b2d8ad3">https://towardsdatascience.com/a-beginners-guide-to-the-data-science-pipeline-a4904b2d8ad3</a></p>
+<strong>How does research quantity and topic influence the rankings of computer science school?</strong><br><br>
+This problem is important for several reasons. One, choosing a university is an extremely important decision, one which requires as much information as possible. Two, one gets out of university what they put in. In other words, if a student seeks an academic track, they would prefer a university with an emphasis on research and publication. If they seek a professional track, these metrics matter less. And three, knowing a schools area of research (and how prevalent their research is in the field) is important when making a decision. A systems research oriented student would not be university searching with the same criteria as a data science oriented student looking to work in industry.</p>
+<h3 id="Overview">Overview<a class="anchor-link" href="#Overview">&#182;</a></h3><p>To answer these questions and help students make more informed university decisions, we will be analyzing data from csrankings.com in terms of their rankings as well as their data on computer science research from the past ten years. There have been previous analyses on faculty number and rankings (<a href="https://krixly.github.io/">https://krixly.github.io/</a>) however this projects seeks to find correlations between research quantity and area on rankings.</p>
+<h4 id="Ulterior-Motives?">Ulterior Motives?<a class="anchor-link" href="#Ulterior-Motives?">&#182;</a></h4><p>This analysis also doubles as a tutorial in data science, particularly the data science pipeline. Data science seeks to analyze data to extract meaning. In our case, this meaning comes in the form of understanding how research affects CS rankings. The pipeline we use includes: Data collection and organization, exploratory data analysis, hypothesis testing and machine learning, and finally interpretation and meaning explanation. To aid in this understanding, we have included extra resources in the form of links and definitions.<br>For more information on data science in general, visit: <a href="https://en.wikipedia.org/wiki/Data_science">https://en.wikipedia.org/wiki/Data_science</a><br>For more information on the data science pipeline, visit: <a href="https://towardsdatascience.com/a-beginners-guide-to-the-data-science-pipeline-a4904b2d8ad3">https://towardsdatascience.com/a-beginners-guide-to-the-data-science-pipeline-a4904b2d8ad3</a></p>
 
 </div>
 </div>
@@ -11805,7 +11805,7 @@ This problem is important for for serveral reasons. One, choosing a university i
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="2.-Data-Collection-and-Organization">2. Data Collection and Organization<a class="anchor-link" href="#2.-Data-Collection-and-Organization">&#182;</a></h2><p>The first step in the data science pipeline is data collection and organization. We scraped (Def: data scraping- using code to extract data from another program) data from csrankings.org (see link below). This data contains the raw data used to create this sources Top 20 CS schools rankings. It includes information on professors, their publications, their associated universities, and the area of research. An important aspect of data scraping is its human readability. A csv file (Def: CSV- comma separated values) organizes rows of a data table by separating each data entry with a comma. We read our data into a python data structure called a dataframe in order to more easily work with the data.
-<br>Follow the steps below to see how we scraped, cleased, and organizaed our data.
+<br>Follow the steps below to see how we scraped, cleansed, and organized our data.
 <br><br>Data came from: <a href="https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv">https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv</a></p>
 
 </div>
@@ -12110,14 +12110,14 @@ This problem is important for for serveral reasons. One, choosing a university i
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Next, we read data from <a href="https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv">https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv</a> <br>Potential problem: This data could contain entires we don't need or could have invalid entires (for example, if an entry does not contain a value for publication area). <br>Solution: cleanse the data. Cleansing data is a way to remove any invalid or unwanted data. It is also a way to ensure the data we're using wil give us the most relevant and valid results.</p>
+<p>Next, we read data from <a href="https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv">https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv</a> <br>Potential problem: This data could contain entries we don't need or could have invalid entries (for example, if an entry does not contain a value for publication area). <br>Solution: cleanse the data. Cleansing data is a way to remove any invalid or unwanted data. It is also a way to ensure the data we're using will give us the most relevant and valid results.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="prompt input_prompt">In&nbsp;[108]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#read data from csv file into a pandas dataframe</span>
@@ -12138,9 +12138,6 @@ This problem is important for for serveral reasons. One, choosing a university i
 <span class="n">professor_publication_info</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;area&quot;</span><span class="p">:</span><span class="s2">&quot;research area&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">professor_publication_info</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-<span class="c1">#This (below) is not important for us. duplicate professors is fine</span>
-<span class="c1">#print(professor_publication_info[&#39;research area&#39;].unique())</span>
-<span class="c1">#print(len(professor_publication_info[&#39;name&#39;]))</span>
 </pre></div>
 
 </div>
@@ -12153,7 +12150,7 @@ This problem is important for for serveral reasons. One, choosing a university i
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[104]:</div>
+<div class="prompt output_prompt">Out[108]:</div>
 
 
 
@@ -12227,14 +12224,14 @@ This problem is important for for serveral reasons. One, choosing a university i
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The next step of cleansing the data set is to remove all entires that aren't ranked in the top 20 universities. We show the significance of this step by printing the total number of entries and then the number of remaining entries after we cleanse the unwanted entries. All of that unwanted data would invalidate any data analysis.</p>
+<p>The next step of cleansing the data set is to remove all entries that aren't ranked in the top 20 universities. We show the significance of this step by printing the total number of entries and then the number of remaining entries after we cleanse the unwanted entries. All of that unwanted data would invalidate any data analysis.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[105]:</div>
+<div class="prompt input_prompt">In&nbsp;[109]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries before cleansing by year: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
@@ -12273,7 +12270,7 @@ Number of total entries after cleansing by year: 61801
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[106]:</div>
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#this section of cleansing will remove any data from a university not in the top 20</span>
@@ -12313,14 +12310,14 @@ Number of total entries after cleansing by uni: 17593
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As we can see, the cleansing was an extrememly important to reducing the number of data entires from 101597 to 17593. Now we're left with data relating only to publications at the top 20 universities from the past 10 years (2008-2018)<br><br>The next step is to ensure there is no missing data. We do this by checking the unique values of each column. If there is something unexpected, such as a 'research area' entry which is not one validated on csrankings.com, we should remove that entry. We accomplish this by looking at the output of unique entries and looking for anything invalid.</p>
+<p>As we can see, the cleansing was an extremely important to reducing the number of data entries from 101597 to 17593. Now we're left with data relating only to publications at the top 20 universities from the past 10 years (2008-2018)<br><br>The next step is to ensure there is no missing data. We do this by checking the unique values of each column. If there is something unexpected, such as a 'research area' entry which is not one validated on csrankings.com, we should remove that entry. We accomplish this by looking at the output of unique entries and looking for anything invalid.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[107]:</div>
+<div class="prompt input_prompt">In&nbsp;[111]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
@@ -12328,13 +12325,13 @@ Number of total entries after cleansing by uni: 17593
 <span class="c1">#pets is not tracked</span>
 <span class="c1">#chiconf not tracked</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries before cleansing untracked research areas: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
-<span class="n">untracked_publications</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">publications_including_untracked</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">untracked</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pets&#39;</span><span class="p">,</span> <span class="s1">&#39;chiconf&#39;</span><span class="p">]</span>
-<span class="n">untracked_publications</span> <span class="o">=</span> <span class="n">untracked_publications</span><span class="p">[</span><span class="n">untracked_publications</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">untracked</span><span class="p">)]</span>
+<span class="c1">#untracked_publications = untracked_publications[untracked_publications[&#39;research area&#39;].isin(untracked)]</span>
 <span class="n">professor_publication_info</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="p">[</span><span class="o">~</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">untracked</span><span class="p">)]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries after cleansing untracked research areas: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
 
-<span class="n">untracked_publications</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1">#untracked_publications.head()</span>
 </pre></div>
 
 </div>
@@ -12357,74 +12354,6 @@ Number of total entries after cleansing untracked research areas: 16826
 </div>
 </div>
 
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[107]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>university</th>
-      <th>research area</th>
-      <th>year</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1489</th>
-      <td>University of Washington</td>
-      <td>chiconf</td>
-      <td>2010</td>
-    </tr>
-    <tr>
-      <th>1490</th>
-      <td>University of Washington</td>
-      <td>chiconf</td>
-      <td>2011</td>
-    </tr>
-    <tr>
-      <th>1491</th>
-      <td>University of Washington</td>
-      <td>chiconf</td>
-      <td>2012</td>
-    </tr>
-    <tr>
-      <th>1836</th>
-      <td>University of Michigan</td>
-      <td>chiconf</td>
-      <td>2015</td>
-    </tr>
-    <tr>
-      <th>1837</th>
-      <td>University of Michigan</td>
-      <td>chiconf</td>
-      <td>2016</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -12433,7 +12362,7 @@ Number of total entries after cleansing untracked research areas: 16826
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>When looking for invalid data, we found two areas of research which were not part of the set of areas which were considered in the rankings. So, we added these to a new dataframe. We also removed those entries from the main publication data table.<br>We did this because it raises the question of why these research areas are not considered. Later, we will look at how much this missing data affects ranking.<br><br>
+<p>When looking for invalid data, we found two areas of research which were not part of the set of areas which were considered in the rankings. So, we removed those entries from the main publication data table. Prior to this, we copied the dataframe so we have a version with all publications including those untracked.<br>We did this because it raises the question of why these research areas are not considered. Later, we will look at how much this missing data affects ranking.<br><br>
 Now that the data is cleansed and organized, we're ready to move onto the next phase of the data science pipeline: Exploratory Data Analysis</p>
 
 </div>
@@ -12449,23 +12378,7 @@ Now that the data is cleansed and organized, we're ready to move onto the next p
 <span class="n">undergraduate_number_cs</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dept&quot;</span><span class="p">:</span><span class="s2">&quot;university&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1">#</span>
 <span class="n">top20_US_Universities</span> <span class="o">=</span> \
-<span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;university&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">top_20</span><span class="p">)]</span><span class="c1">#[&#39;Carnegie Mellon University&#39;</span>
-                                                                                 <span class="c1">#           ,&#39;Massachusetts Institute of Technology&#39;</span>
-                                                                                  <span class="c1">###       ,&#39;Univ. of Illinois at Urbana-Champaign&#39;</span>
-                                                                                     <span class="c1">##     ,&#39;University of Washington&#39;</span>
-                                                                                       <span class="c1">#    ,&#39;Georgia Institute of Technology&#39;</span>
-                                                                                        <span class="c1">#   ,&#39;Princeton University&#39;</span>
-                                                                                         <span class="c1">## ,&#39;California Institute of Technology&#39;</span>
-                                                                                      <span class="c1">#     ,&#39;University of Michigan&#39;</span>
-                                                                                       <span class="c1">#    ,&#39;Columbia University&#39;</span>
-                                                                                        <span class="c1">#   ,&#39;University of California - Los Angeles&#39;</span>
-                                                                                         <span class="c1">#  ,&#39;University of Wisconsin - Madison&#39;</span>
-                                                                                          <span class="c1"># ,&#39;Harvard University&#39;</span>
-                                                                                  <span class="c1">#         #,&#39;University of California - San Diego&#39;</span>
-                                                                                   <span class="c1">#        ,&#39;University of Maryland - College Park&#39;</span>
-                                                                                    <span class="c1">#       ,&#39;University of Pennsylvania&#39;</span>
-                                                                                     <span class="c1">#      ,&#39;Purdue University&#39;</span>
-                                                                                      <span class="c1">#     ,&#39;Yale University&#39;])]</span>
+<span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;university&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">top_20</span><span class="p">)]</span>
 <span class="n">final_dataframe</span> <span class="o">=</span> <span class="n">top20_US_Universities</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;university&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">university</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 <span class="c1">#final_dataframe</span>
 </pre></div>

@@ -2,14 +2,16 @@
 structure: theres a list of things that need to get done and who will do them. MS is mitchell, KK is kalyan
 To do:
 -finish data scraping and cleaning
-	-clean data for missing areas of study MS
-	-clean data for missing university MS 
-	-remove data on universtities not in top 20 MS
-	-remove any research from earlier than 2008 MS
+	-clean data for missing areas of study MS DONE
+	-clean data for missing university MS DONE
+	-remove data on universtities not in top 20 MS DONE
+	-remove any research from earlier than 2008 MS DONE
+	-find if there is any unicorporated data and make new dataframe MS DONE
 	-write about all of these MS
--EDA (can be done before data cleaning is done)
+-EDA (can be done before data cleaning is done) MS
 	-count number of submissions for each type of submissions
 	-count number of publications from each unniversity
+	-count number of pubs from each uni and area, including untracked data
 	-combine these into a table
 	-plot data (we could make a lot of plots of just this)
 	-**need 4 plots here so probably need to do other types of analysis (year spikes?)
@@ -22,6 +24,7 @@ To do:
 	-write about it
 	-repeat for whether certain publication areas lead to higher ranks than others
 		-or maybe if diversity of publication matters more?
+		-**repeat for the dataframe including untracked areas of research. How does the untracked data influence the analysis?
 -Conclusion
 	-extract the meaning from the analysis
 	-comment on the effect of publication number and type on ranking
