@@ -11804,8 +11804,9 @@ This problem is important for several reasons. One, choosing a university is an 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Data-Collection-and-Organization">2. Data Collection and Organization<a class="anchor-link" href="#2.-Data-Collection-and-Organization">&#182;</a></h2><p>The first step in the data science pipeline is data collection and organization. We scraped (Def: data scraping- using code to extract data from another program) data from csrankings.org (see link below). This data contains the raw data used to create this sources Top 20 CS schools rankings. It includes information on professors, their publications, their associated universities, and the area of research. An important aspect of data scraping is its human readability. A csv file (Def: CSV- comma separated values) organizes rows of a data table by separating each data entry with a comma. We read our data into a python data structure called a dataframe in order to more easily work with the data.
-<br>Follow the steps below to see how we scraped, cleansed, and organized our data.
+<h2 id="2.-Data-Collection-and-Organization">2. Data Collection and Organization<a class="anchor-link" href="#2.-Data-Collection-and-Organization">&#182;</a></h2><h4 id="General-Data-Collection-and-Organization-Info">General Data Collection and Organization Info<a class="anchor-link" href="#General-Data-Collection-and-Organization-Info">&#182;</a></h4><p>The first step in the data science pipeline is data collection and organization. There are many ways to collect data that range from running your own scientific experiments, polling a sample, to scraping data from a web servie. Data scraping means using code to extract data from another program. A common practice in python data science is to read the data into a dataframe, which is a table structure which makes data manipulation and analysis easy. Once the data is in a dataframe certain issues arise such as missing or duplicated data. To combat this, we cleanse the data to ensure it has only valid values and won't be skewed by duplications. Finally, the last step of this section is data organization which is when you drop unwanted data and tidy the data. Tidy data is when each row represents a single observation (in our case, each row will be a university).<br>More info on tidy data(pdf download): <a href="https://www.jstatsoft.org/article/view/v059i10/v59i10.pdf">https://www.jstatsoft.org/article/view/v059i10/v59i10.pdf</a></p>
+<h4 id="Our-Data-Collection-and-Organization">Our Data Collection and Organization<a class="anchor-link" href="#Our-Data-Collection-and-Organization">&#182;</a></h4><p>We scraped data from csrankings.org (see link below). This data contains the raw data used to create this sources Top 20 CS schools rankings. It includes information on professors, their publications, their associated universities, and the area of research. An important aspect of data scraping is its human readability. A csv file (Def: CSV- comma separated values) organizes rows of a data table by separating each data entry with a comma. We read our data into a dataframe.
+<br>Follow the steps below to see how we scraped, cleansed, and tidied our data.
 <br><br>Data came from: <a href="https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv">https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv</a></p>
 
 </div>
@@ -11831,9 +11832,18 @@ This problem is important for several reasons. One, choosing a university is an 
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For the top 20 rankings data, we created a csv file from csrankings.org. Then we dropped two columns (group and faculty) because they would not be useful for us.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[169]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#read the top 20 rankings from csrankings.org (data was copied from the website to a csv)</span>
@@ -11845,6 +11855,7 @@ This problem is important for several reasons. One, choosing a university is an 
 
 <span class="c1">#get the list of top 20 schools</span>
 <span class="n">top_20</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">top_20_universities_rank</span><span class="p">[</span><span class="s1">&#39;University&#39;</span><span class="p">])</span>
+<span class="n">rank</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">top_20_universities_rank</span><span class="p">[</span><span class="s1">&#39;Rank&#39;</span><span class="p">])</span>
 
 <span class="n">top_20_universities_rank</span>
 </pre></div>
@@ -11859,7 +11870,7 @@ This problem is important for several reasons. One, choosing a university is an 
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[85]:</div>
+<div class="prompt output_prompt">Out[169]:</div>
 
 
 
@@ -12016,7 +12027,10 @@ This problem is important for several reasons. One, choosing a university is an 
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">prof_names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#</span>
+<span class="c1">#DO WE NEED THIS???</span>
+<span class="c1">#</span>
+<span class="n">prof_names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">prof_names</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -12110,14 +12124,14 @@ This problem is important for several reasons. One, choosing a university is an 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Next, we read data from <a href="https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv">https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv</a> <br>Potential problem: This data could contain entries we don't need or could have invalid entries (for example, if an entry does not contain a value for publication area). <br>Solution: cleanse the data. Cleansing data is a way to remove any invalid or unwanted data. It is also a way to ensure the data we're using will give us the most relevant and valid results.</p>
+<p>Next, we read data from <a href="https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv">https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv</a> . This process used a python function, read_csv() to scraped the data directly from a webpage. Here is the first time we are doing cleansing. <br>The potential problem: This data could contain entries we don't need or could have invalid entries (for example, if an entry does not contain a value for publication area). <br>Solution: cleanse the data to ensure the data we're using will give us the most relevant and valid results. The first cleansing step is to drop columns that we do not need (such as professor name). We also rename columns (dept to university) to better understand what the data means in the context of our analysis.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[108]:</div>
+<div class="prompt input_prompt">In&nbsp;[154]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#read data from csv file into a pandas dataframe</span>
@@ -12150,7 +12164,7 @@ This problem is important for several reasons. One, choosing a university is an 
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[108]:</div>
+<div class="prompt output_prompt">Out[154]:</div>
 
 
 
@@ -12231,7 +12245,7 @@ This problem is important for several reasons. One, choosing a university is an 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[109]:</div>
+<div class="prompt input_prompt">In&nbsp;[155]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries before cleansing by year: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
@@ -12270,7 +12284,7 @@ Number of total entries after cleansing by year: 61801
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[110]:</div>
+<div class="prompt input_prompt">In&nbsp;[156]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#this section of cleansing will remove any data from a university not in the top 20</span>
@@ -12317,21 +12331,22 @@ Number of total entries after cleansing by uni: 17593
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[111]:</div>
+<div class="prompt input_prompt">In&nbsp;[157]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 <span class="c1">#by checking which research areas are used to calculate ranking, we found that:</span>
 <span class="c1">#pets is not tracked</span>
 <span class="c1">#chiconf not tracked</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries before cleansing untracked research areas: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
 <span class="n">publications_including_untracked</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">untracked</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pets&#39;</span><span class="p">,</span> <span class="s1">&#39;chiconf&#39;</span><span class="p">]</span>
-<span class="c1">#untracked_publications = untracked_publications[untracked_publications[&#39;research area&#39;].isin(untracked)]</span>
+<span class="n">untracked_publications</span> <span class="o">=</span> <span class="n">untracked_publications</span><span class="p">[</span><span class="n">untracked_publications</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">untracked</span><span class="p">)]</span>
+
+<span class="c1">#remove untracked research areas from data</span>
 <span class="n">professor_publication_info</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="p">[</span><span class="o">~</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">untracked</span><span class="p">)]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries after cleansing untracked research areas: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
-
-<span class="c1">#untracked_publications.head()</span>
 </pre></div>
 
 </div>
@@ -12362,8 +12377,557 @@ Number of total entries after cleansing untracked research areas: 16826
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>When looking for invalid data, we found two areas of research which were not part of the set of areas which were considered in the rankings. So, we removed those entries from the main publication data table. Prior to this, we copied the dataframe so we have a version with all publications including those untracked.<br>We did this because it raises the question of why these research areas are not considered. Later, we will look at how much this missing data affects ranking.<br><br>
-Now that the data is cleansed and organized, we're ready to move onto the next phase of the data science pipeline: Exploratory Data Analysis</p>
+<p>When looking for invalid data, we found two areas of research which were not part of the set of areas which were considered in the rankings. So, we removed those entries from the main publication data table. Prior to this, we copied the dataframe so we have a version with all publications including those untracked.<br>We did this because it raises the question of why these research areas are not considered. Later, we will look at how much this missing data affects ranking.<br><br>The final step of data collection and organization is tidying the data! We do this by combining all the data into a new dataframe where each row corresponds to a university. We will also begin doing data collection on our data. This means summing things such as number of total publications per school and the number of publications per school in each of the 4 categories (AI, Systems, Theory, and Interdisciplinary). This step is essential. Once the dataframe is formed, each column serves a dependent variable which makes streamlines plotting and analysis.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[172]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Tidying</span>
+<span class="c1">#totals for finding each school&#39;s percentage of publication per area</span>
+<span class="n">num_ai</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">num_systems</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">num_theory</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">num_inter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">num_untracked</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">num_pubs_with_untracked</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">publications_including_untracked</span><span class="p">)</span>
+
+<span class="c1">#columns of the new dataframe</span>
+<span class="n">total_pubs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">#total pubs for each school</span>
+<span class="n">total_pubs_untracked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">#total pubs for each school, including untracked pubs</span>
+<span class="n">total_ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">#total ai pubs for each school</span>
+<span class="n">total_theory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">#total systems pubs for each school</span>
+<span class="n">total_systems</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">#total theory pubs for each school</span>
+<span class="n">total_inter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">#total interdisciplinary pubs for each school</span>
+<span class="n">total_untracked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">#untracked are treated as their own category</span>
+
+<span class="n">percentage_pubs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">#percentage of total pubs</span>
+<span class="n">percentage_pubs_untracked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">#percentage of total pubs, including untracked</span>
+<span class="n">percentage_ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">percentage_theory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">percentage_systems</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">percentage_inter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">percentage_untracked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="c1">#percentage of untracked pubs for each school</span>
+
+<span class="c1">#list of each research area in the 4 categories:</span>
+<span class="n">ai</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;aaai&#39;</span><span class="p">,</span><span class="s1">&#39;ijcai&#39;</span><span class="p">,</span><span class="s1">&#39;cvpr&#39;</span><span class="p">,</span><span class="s1">&#39;eccv&#39;</span><span class="p">,</span><span class="s1">&#39;iccv&#39;</span><span class="p">,</span><span class="s1">&#39;icml&#39;</span><span class="p">,</span><span class="s1">&#39;kdd&#39;</span><span class="p">,</span><span class="s1">&#39;nips&#39;</span><span class="p">,</span><span class="s1">&#39;acl&#39;</span><span class="p">,</span><span class="s1">&#39;emnlp&#39;</span><span class="p">,</span><span class="s1">&#39;naacl&#39;</span><span class="p">,</span><span class="s1">&#39;sigir&#39;</span><span class="p">,</span><span class="s1">&#39;www&#39;</span><span class="p">]</span>
+<span class="n">systems</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;asplos&#39;</span><span class="p">,</span><span class="s1">&#39;isca&#39;</span><span class="p">,</span><span class="s1">&#39;micro&#39;</span><span class="p">,</span><span class="s1">&#39;hpca&#39;</span><span class="p">,</span><span class="s1">&#39;sigcomm&#39;</span><span class="p">,</span><span class="s1">&#39;nsdi&#39;</span><span class="p">,</span><span class="s1">&#39;ccs&#39;</span><span class="p">,</span><span class="s1">&#39;oakland&#39;</span><span class="p">,</span><span class="s1">&#39;usenixsec&#39;</span><span class="p">,</span><span class="s1">&#39;ndss&#39;</span><span class="p">,</span><span class="s1">&#39;sigmod&#39;</span><span class="p">,</span>\
+          <span class="s1">&#39;vldb&#39;</span><span class="p">,</span><span class="s1">&#39;icde&#39;</span><span class="p">,</span><span class="s1">&#39;pods&#39;</span><span class="p">,</span><span class="s1">&#39;dac&#39;</span><span class="p">,</span><span class="s1">&#39;iccad&#39;</span><span class="p">,</span><span class="s1">&#39;emsoft&#39;</span><span class="p">,</span><span class="s1">&#39;rtas&#39;</span><span class="p">,</span><span class="s1">&#39;rtss&#39;</span><span class="p">,</span><span class="s1">&#39;hpdc&#39;</span><span class="p">,</span><span class="s1">&#39;ics&#39;</span><span class="p">,</span><span class="s1">&#39;sc&#39;</span><span class="p">,</span><span class="s1">&#39;mobicom&#39;</span><span class="p">,</span><span class="s1">&#39;mobisys&#39;</span><span class="p">,</span>\
+          <span class="s1">&#39;sensys&#39;</span><span class="p">,</span><span class="s1">&#39;imc&#39;</span><span class="p">,</span><span class="s1">&#39;sigmetrics&#39;</span><span class="p">,</span><span class="s1">&#39;osdi&#39;</span><span class="p">,</span><span class="s1">&#39;sosp&#39;</span><span class="p">,</span><span class="s1">&#39;eurosys&#39;</span><span class="p">,</span><span class="s1">&#39;fast&#39;</span><span class="p">,</span><span class="s1">&#39;usenixatc&#39;</span><span class="p">,</span><span class="s1">&#39;pldi&#39;</span><span class="p">,</span><span class="s1">&#39;popl&#39;</span><span class="p">,</span><span class="s1">&#39;icfp&#39;</span><span class="p">,</span><span class="s1">&#39;oopsla&#39;</span><span class="p">,</span>\
+          <span class="s1">&#39;fse&#39;</span><span class="p">,</span><span class="s1">&#39;icse&#39;</span><span class="p">,</span><span class="s1">&#39;ase&#39;</span><span class="p">,</span><span class="s1">&#39;issta&#39;</span><span class="p">]</span>
+<span class="n">theory</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;focs&#39;</span><span class="p">,</span><span class="s1">&#39;soda&#39;</span><span class="p">,</span><span class="s1">&#39;stoc&#39;</span><span class="p">,</span><span class="s1">&#39;crypto&#39;</span><span class="p">,</span><span class="s1">&#39;eurocrypt&#39;</span><span class="p">,</span><span class="s1">&#39;cav&#39;</span><span class="p">,</span><span class="s1">&#39;lics&#39;</span><span class="p">]</span>
+<span class="n">inter</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ismb&#39;</span><span class="p">,</span><span class="s1">&#39;recomb&#39;</span><span class="p">,</span><span class="s1">&#39;siggraph&#39;</span><span class="p">,</span><span class="s1">&#39;siggraph-asia&#39;</span><span class="p">,</span><span class="s1">&#39;ec&#39;</span><span class="p">,</span><span class="s1">&#39;wine&#39;</span><span class="p">,</span><span class="s1">&#39;ubicomp&#39;</span><span class="p">,</span><span class="s1">&#39;uist&#39;</span><span class="p">,</span><span class="s1">&#39;icra&#39;</span><span class="p">,</span><span class="s1">&#39;iros&#39;</span><span class="p">,</span>\
+         <span class="s1">&#39;rss&#39;</span><span class="p">,</span><span class="s1">&#39;vis&#39;</span><span class="p">,</span><span class="s1">&#39;vr&#39;</span><span class="p">]</span>
+
+<span class="c1">#first divide dataframe by categories</span>
+<span class="n">ai_df</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">ai</span><span class="p">)]</span>
+<span class="n">systems_df</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">systems</span><span class="p">)]</span>
+<span class="n">theory_df</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">theory</span><span class="p">)]</span>
+<span class="n">inter_df</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">inter</span><span class="p">)]</span>
+
+<span class="c1">#totals of each category</span>
+<span class="n">num_ai</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ai_df</span><span class="p">)</span>
+<span class="n">num_systems</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">systems_df</span><span class="p">)</span>
+<span class="n">num_theory</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">theory_df</span><span class="p">)</span>
+<span class="n">num_inter</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inter_df</span><span class="p">)</span>
+<span class="n">num_untracked</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">untracked_publications</span><span class="p">)</span>
+
+<span class="c1">#traverse each one to get num of each category</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">top_20</span><span class="p">))</span> <span class="p">:</span>
+    <span class="n">total_ai</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ai_df</span><span class="p">[</span><span class="n">ai_df</span><span class="p">[</span><span class="s1">&#39;university&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">top_20</span><span class="p">[</span><span class="n">j</span><span class="p">]])])</span>
+    <span class="n">total_systems</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">systems_df</span><span class="p">[</span><span class="n">systems_df</span><span class="p">[</span><span class="s1">&#39;university&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">top_20</span><span class="p">[</span><span class="n">j</span><span class="p">]])])</span>
+    <span class="n">total_theory</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">theory_df</span><span class="p">[</span><span class="n">theory_df</span><span class="p">[</span><span class="s1">&#39;university&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">top_20</span><span class="p">[</span><span class="n">j</span><span class="p">]])])</span>
+    <span class="n">total_inter</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inter_df</span><span class="p">[</span><span class="n">inter_df</span><span class="p">[</span><span class="s1">&#39;university&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">top_20</span><span class="p">[</span><span class="n">j</span><span class="p">]])])</span>
+    <span class="n">total_untracked</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">untracked_publications</span><span class="p">[</span><span class="n">untracked_publications</span><span class="p">[</span><span class="s1">&#39;university&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">top_20</span><span class="p">[</span><span class="n">j</span><span class="p">]])])</span>
+
+<span class="c1">#traverse each one to get total percentage</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">top_20</span><span class="p">))</span> <span class="p">:</span>
+    <span class="n">percentage_ai</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_ai</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">num_ai</span>
+    <span class="n">percentage_theory</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_systems</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">num_systems</span>
+    <span class="n">percentage_systems</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_theory</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">num_theory</span>
+    <span class="n">percentage_inter</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_inter</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">num_inter</span>
+    <span class="n">percentage_untracked</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_untracked</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">num_untracked</span>
+    
+    <span class="c1">#total of all pubs</span>
+    <span class="n">total_pubs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_ai</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">total_systems</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">total_theory</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">total_inter</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="n">total_pubs_untracked</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_ai</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">total_systems</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">total_theory</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">total_inter</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">total_untracked</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="n">percentage_pubs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_pubs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">professor_publication_info</span><span class="p">)</span>
+    <span class="n">percentage_pubs_untracked</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_pubs_untracked</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">num_pubs_with_untracked</span>
+    
+<span class="c1">#make new Tidy dataframe</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;University&#39;</span> <span class="p">:</span> <span class="n">top_20</span><span class="p">,</span> <span class="s1">&#39;Rank&#39;</span> <span class="p">:</span> <span class="n">rank</span><span class="p">,</span> <span class="s1">&#39;Total Pubs&#39;</span> <span class="p">:</span> <span class="n">total_pubs</span><span class="p">,</span> <span class="s1">&#39;% Total Pubs&#39;</span> <span class="p">:</span> <span class="n">percentage_pubs</span><span class="p">,</span>\
+    <span class="s1">&#39;# AI Pubs&#39;</span> <span class="p">:</span> <span class="n">total_ai</span><span class="p">,</span> <span class="s1">&#39;% AI Pubs&#39;</span> <span class="p">:</span> <span class="n">percentage_ai</span><span class="p">,</span> <span class="s1">&#39;# Systems Pubs&#39;</span> <span class="p">:</span> <span class="n">total_systems</span><span class="p">,</span> <span class="s1">&#39;% Systems Pubs&#39;</span> <span class="p">:</span>\
+     <span class="n">percentage_systems</span><span class="p">,</span> <span class="s1">&#39;# Theory Pubs&#39;</span> <span class="p">:</span> <span class="n">total_theory</span><span class="p">,</span> <span class="s1">&#39;% Theory Pubs&#39;</span> <span class="p">:</span> <span class="n">percentage_theory</span><span class="p">,</span> <span class="s1">&#39;# Inter Pubs&#39;</span> <span class="p">:</span> <span class="n">total_inter</span><span class="p">,</span>\
+    <span class="s1">&#39;% Inter Pubs&#39;</span> <span class="p">:</span> <span class="n">percentage_inter</span><span class="p">,</span> <span class="s1">&#39;Total Pubs w/ Untracked&#39;</span> <span class="p">:</span> <span class="n">total_pubs_untracked</span><span class="p">,</span> <span class="s1">&#39;% Total w/ Untracked&#39;</span> <span class="p">:</span> \
+    <span class="n">total_pubs_untracked</span><span class="p">,</span> <span class="s1">&#39;# Untracked Pubs&#39;</span> <span class="p">:</span> <span class="n">total_untracked</span><span class="p">,</span> <span class="s1">&#39;% Untracked Pubs&#39;</span> <span class="p">:</span> <span class="n">percentage_untracked</span><span class="p">}</span>
+<span class="n">top_20_publication_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">)</span>
+<span class="n">top_20_publication_data</span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>767
+168
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[172]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>University</th>
+      <th>Rank</th>
+      <th>Total Pubs</th>
+      <th>% Total Pubs</th>
+      <th># AI Pubs</th>
+      <th>% AI Pubs</th>
+      <th># Systems Pubs</th>
+      <th>% Systems Pubs</th>
+      <th># Theory Pubs</th>
+      <th>% Theory Pubs</th>
+      <th># Inter Pubs</th>
+      <th>% Inter Pubs</th>
+      <th>Total Pubs w/ Untracked</th>
+      <th>% Total w/ Untracked</th>
+      <th># Untracked Pubs</th>
+      <th>% Untracked Pubs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Carnegie Mellon University</td>
+      <td>1</td>
+      <td>1885.0</td>
+      <td>0.112029</td>
+      <td>762.0</td>
+      <td>0.149970</td>
+      <td>547.0</td>
+      <td>0.097336</td>
+      <td>179.0</td>
+      <td>0.075741</td>
+      <td>397.0</td>
+      <td>0.147914</td>
+      <td>2053.0</td>
+      <td>2053.0</td>
+      <td>168.0</td>
+      <td>0.219035</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Massachusetts Institute of Technology</td>
+      <td>2</td>
+      <td>1200.0</td>
+      <td>0.071318</td>
+      <td>310.0</td>
+      <td>0.061012</td>
+      <td>478.0</td>
+      <td>0.096792</td>
+      <td>178.0</td>
+      <td>0.066187</td>
+      <td>234.0</td>
+      <td>0.087183</td>
+      <td>1224.0</td>
+      <td>1224.0</td>
+      <td>24.0</td>
+      <td>0.031291</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Stanford University</td>
+      <td>3</td>
+      <td>1110.0</td>
+      <td>0.065969</td>
+      <td>358.0</td>
+      <td>0.070459</td>
+      <td>399.0</td>
+      <td>0.072322</td>
+      <td>133.0</td>
+      <td>0.055248</td>
+      <td>220.0</td>
+      <td>0.081967</td>
+      <td>1157.0</td>
+      <td>1157.0</td>
+      <td>47.0</td>
+      <td>0.061278</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>University of California - Berkeley</td>
+      <td>4</td>
+      <td>1127.0</td>
+      <td>0.066980</td>
+      <td>326.0</td>
+      <td>0.064161</td>
+      <td>474.0</td>
+      <td>0.060903</td>
+      <td>112.0</td>
+      <td>0.065633</td>
+      <td>215.0</td>
+      <td>0.080104</td>
+      <td>1161.0</td>
+      <td>1161.0</td>
+      <td>34.0</td>
+      <td>0.044329</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Univ. of Illinois at Urbana-Champaign</td>
+      <td>5</td>
+      <td>1050.0</td>
+      <td>0.062403</td>
+      <td>232.0</td>
+      <td>0.045660</td>
+      <td>630.0</td>
+      <td>0.053834</td>
+      <td>99.0</td>
+      <td>0.087233</td>
+      <td>89.0</td>
+      <td>0.033159</td>
+      <td>1095.0</td>
+      <td>1095.0</td>
+      <td>45.0</td>
+      <td>0.058670</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>University of Michigan</td>
+      <td>6</td>
+      <td>1016.0</td>
+      <td>0.060383</td>
+      <td>250.0</td>
+      <td>0.049203</td>
+      <td>590.0</td>
+      <td>0.027189</td>
+      <td>50.0</td>
+      <td>0.081695</td>
+      <td>126.0</td>
+      <td>0.046945</td>
+      <td>1074.0</td>
+      <td>1074.0</td>
+      <td>58.0</td>
+      <td>0.075619</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Cornell University</td>
+      <td>7</td>
+      <td>985.0</td>
+      <td>0.058540</td>
+      <td>405.0</td>
+      <td>0.079709</td>
+      <td>325.0</td>
+      <td>0.050571</td>
+      <td>93.0</td>
+      <td>0.045001</td>
+      <td>162.0</td>
+      <td>0.060358</td>
+      <td>1050.0</td>
+      <td>1050.0</td>
+      <td>65.0</td>
+      <td>0.084746</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>University of Washington</td>
+      <td>8</td>
+      <td>939.0</td>
+      <td>0.055806</td>
+      <td>182.0</td>
+      <td>0.035820</td>
+      <td>451.0</td>
+      <td>0.057640</td>
+      <td>106.0</td>
+      <td>0.062448</td>
+      <td>200.0</td>
+      <td>0.074516</td>
+      <td>1062.0</td>
+      <td>1062.0</td>
+      <td>123.0</td>
+      <td>0.160365</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Georgia Institute of Technology</td>
+      <td>9</td>
+      <td>964.0</td>
+      <td>0.057292</td>
+      <td>332.0</td>
+      <td>0.065341</td>
+      <td>370.0</td>
+      <td>0.036433</td>
+      <td>67.0</td>
+      <td>0.051232</td>
+      <td>195.0</td>
+      <td>0.072653</td>
+      <td>1035.0</td>
+      <td>1035.0</td>
+      <td>71.0</td>
+      <td>0.092568</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>University of California - San Diego</td>
+      <td>10</td>
+      <td>704.0</td>
+      <td>0.041840</td>
+      <td>147.0</td>
+      <td>0.028931</td>
+      <td>388.0</td>
+      <td>0.047852</td>
+      <td>88.0</td>
+      <td>0.053725</td>
+      <td>81.0</td>
+      <td>0.030179</td>
+      <td>740.0</td>
+      <td>740.0</td>
+      <td>36.0</td>
+      <td>0.046936</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>University of Maryland - College Park</td>
+      <td>11</td>
+      <td>673.0</td>
+      <td>0.039998</td>
+      <td>256.0</td>
+      <td>0.050384</td>
+      <td>231.0</td>
+      <td>0.033170</td>
+      <td>61.0</td>
+      <td>0.031986</td>
+      <td>125.0</td>
+      <td>0.046572</td>
+      <td>713.0</td>
+      <td>713.0</td>
+      <td>40.0</td>
+      <td>0.052151</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>University of Wisconsin - Madison</td>
+      <td>12</td>
+      <td>644.0</td>
+      <td>0.038274</td>
+      <td>154.0</td>
+      <td>0.030309</td>
+      <td>378.0</td>
+      <td>0.032626</td>
+      <td>60.0</td>
+      <td>0.052340</td>
+      <td>52.0</td>
+      <td>0.019374</td>
+      <td>654.0</td>
+      <td>654.0</td>
+      <td>10.0</td>
+      <td>0.013038</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Columbia University</td>
+      <td>13</td>
+      <td>556.0</td>
+      <td>0.033044</td>
+      <td>174.0</td>
+      <td>0.034245</td>
+      <td>195.0</td>
+      <td>0.056009</td>
+      <td>103.0</td>
+      <td>0.027001</td>
+      <td>84.0</td>
+      <td>0.031297</td>
+      <td>569.0</td>
+      <td>569.0</td>
+      <td>13.0</td>
+      <td>0.016949</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>University of Pennsylvania</td>
+      <td>14</td>
+      <td>655.0</td>
+      <td>0.038928</td>
+      <td>204.0</td>
+      <td>0.040150</td>
+      <td>259.0</td>
+      <td>0.030451</td>
+      <td>56.0</td>
+      <td>0.035863</td>
+      <td>136.0</td>
+      <td>0.050671</td>
+      <td>659.0</td>
+      <td>659.0</td>
+      <td>4.0</td>
+      <td>0.005215</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>University of Southern California</td>
+      <td>15</td>
+      <td>578.0</td>
+      <td>0.034352</td>
+      <td>221.0</td>
+      <td>0.043495</td>
+      <td>177.0</td>
+      <td>0.032083</td>
+      <td>59.0</td>
+      <td>0.024508</td>
+      <td>121.0</td>
+      <td>0.045082</td>
+      <td>578.0</td>
+      <td>578.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>University of Texas at Austin</td>
+      <td>15</td>
+      <td>536.0</td>
+      <td>0.031855</td>
+      <td>188.0</td>
+      <td>0.037001</td>
+      <td>216.0</td>
+      <td>0.050027</td>
+      <td>92.0</td>
+      <td>0.029909</td>
+      <td>40.0</td>
+      <td>0.014903</td>
+      <td>538.0</td>
+      <td>538.0</td>
+      <td>2.0</td>
+      <td>0.002608</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Northeastern University</td>
+      <td>17</td>
+      <td>548.0</td>
+      <td>0.032569</td>
+      <td>142.0</td>
+      <td>0.027947</td>
+      <td>280.0</td>
+      <td>0.043502</td>
+      <td>80.0</td>
+      <td>0.038770</td>
+      <td>46.0</td>
+      <td>0.017139</td>
+      <td>564.0</td>
+      <td>564.0</td>
+      <td>16.0</td>
+      <td>0.020860</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Princeton University</td>
+      <td>18</td>
+      <td>561.0</td>
+      <td>0.033341</td>
+      <td>112.0</td>
+      <td>0.022043</td>
+      <td>280.0</td>
+      <td>0.056552</td>
+      <td>104.0</td>
+      <td>0.038770</td>
+      <td>65.0</td>
+      <td>0.024218</td>
+      <td>566.0</td>
+      <td>566.0</td>
+      <td>5.0</td>
+      <td>0.006519</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>University of California - Los Angeles</td>
+      <td>18</td>
+      <td>551.0</td>
+      <td>0.032747</td>
+      <td>192.0</td>
+      <td>0.037788</td>
+      <td>215.0</td>
+      <td>0.047852</td>
+      <td>88.0</td>
+      <td>0.029770</td>
+      <td>56.0</td>
+      <td>0.020864</td>
+      <td>554.0</td>
+      <td>554.0</td>
+      <td>3.0</td>
+      <td>0.003911</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Purdue University</td>
+      <td>20</td>
+      <td>544.0</td>
+      <td>0.032331</td>
+      <td>134.0</td>
+      <td>0.026373</td>
+      <td>339.0</td>
+      <td>0.016857</td>
+      <td>31.0</td>
+      <td>0.046940</td>
+      <td>40.0</td>
+      <td>0.014903</td>
+      <td>547.0</td>
+      <td>547.0</td>
+      <td>3.0</td>
+      <td>0.003911</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Final-Tidy-Table">Final Tidy Table<a class="anchor-link" href="#Final-Tidy-Table">&#182;</a></h4><p>We have a final tidy table where each row is a university. This is the first time we have all of the data from the original 16828 table entires compiled in one place. Now that the data is scraped, cleansed, and tidied, we're ready to move onto the next phase of the data science pipeline: Exploratory Data Analysis</p>
 
 </div>
 </div>
@@ -12374,6 +12938,8 @@ Now that the data is cleansed and organized, we're ready to move onto the next p
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#</span>
+<span class="c1">#DO WE NEED THIS????</span>
+<span class="c1">#</span>
 <span class="n">undergraduate_number_cs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;undergraduate_cs_research.csv&quot;</span><span class="p">)</span>
 <span class="n">undergraduate_number_cs</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dept&quot;</span><span class="p">:</span><span class="s2">&quot;university&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1">#</span>
@@ -12392,7 +12958,7 @@ Now that the data is cleansed and organized, we're ready to move onto the next p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.-Exploratory-Data-Anlysis-(EDA)">3. Exploratory Data Anlysis (EDA)<a class="anchor-link" href="#3.-Exploratory-Data-Anlysis-(EDA)">&#182;</a></h2><p>This step of the data science pipeline is for getting a sense of the data and what possible meaning could be extracted from it. This is done through a variety of methods, but most commonly done by visualizing the data in charts and graphs.<br>The NIST Engineering Handbook describes EDA as, "an approach/philosophy for data analysis that employs a variety of techniques (mostly graphical) to:</p>
+<h2 id="3.-Exploratory-Data-Anlysis-(EDA)">3. Exploratory Data Anlysis (EDA)<a class="anchor-link" href="#3.-Exploratory-Data-Anlysis-(EDA)">&#182;</a></h2><h4 id="General-EDA-Info">General EDA Info<a class="anchor-link" href="#General-EDA-Info">&#182;</a></h4><p>This step of the data science pipeline is for getting a sense of the data and what possible meaning could be extracted from it. This is done through a variety of methods, but most commonly done by visualizing the data in charts and graphs.<br>The NIST Engineering Handbook describes EDA as, "an approach/philosophy for data analysis that employs a variety of techniques (mostly graphical) to:</p>
 <ol>
 <li>maximize insight into a data set;</li>
 <li>uncover underlying structure;</li>
@@ -12410,17 +12976,37 @@ Now that the data is cleansed and organized, we're ready to move onto the next p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For a deeper look at more EDA methods and concepts, this NIST handbook is a useful resource (<a href="https://www.itl.nist.gov/div898/handbook/eda/section1/eda11.htm">https://www.itl.nist.gov/div898/handbook/eda/section1/eda11.htm</a>)<br><br>
-In this step, we will not be answering the question of CS rankings and research, just representing important aspects of the data which we may or may not use for our analysis.<br><br></p>
+<p>For a deeper look at more EDA methods and concepts, this NIST handbook is a useful resource (<a href="https://www.itl.nist.gov/div898/handbook/eda/section1/eda11.htm">https://www.itl.nist.gov/div898/handbook/eda/section1/eda11.htm</a>)<br></p>
+<h4 id="Our-EDA">Our EDA<a class="anchor-link" href="#Our-EDA">&#182;</a></h4><p>In this step, we will not be answering the question of CS rankings and research, just representing important aspects of the data which we may or may not use for our analysis.<br>Before we start analyzing and plotting, we need to create a dataframe with all the data we will need to use for analysis. Currently our data is organized by one publication per row. We want to reorganize it (called 'tidy' data) so each row is one of the top 20 schools</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#plots to make: bar plot of all publications for each school</span>
+    <span class="c1">#add up all publications by school</span>
+<span class="c1">#plot of all including untracked</span>
+    <span class="c1">#all by with including untracked</span>
+<span class="c1">#plot of publication by year (line per school)</span>
+<span class="c1">#plot of types of publications by school</span>
+<span class="c1">#plot of diverse publications (by larger cartegory, not all 73 types)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="5.-Conclusion">5. Conclusion<a class="anchor-link" href="#5.-Conclusion">&#182;</a></h2><p>(fill this in with conclusion stuff. I just wanted to write the very end so it ties back to the beginning 'Imagine' section)
+<h2 id="5.-Conclusion">5. Conclusion<a class="anchor-link" href="#5.-Conclusion">&#182;</a></h2><p>IMPORTANT FOR KALYAN!!! The two untracked reseach areas are Human-Computer interaction (chiconf) and I couldn't figure out what 'pets' was. But defnitely write about the untracked research areas. I determined these because on the csrankings.org website they list 73 research areas used to calculate the list. Those two areas are in the dataset but don't factor in for some reason<br><br>Another important thing to write about is how this ranking is totally quantitative, while US NEws and world report uses polling data from department heads (who are definitely biased towards their own universities)<br><br>
+(fill this in with conclusion stuff. I just wanted to write the very end so it ties back to the beginning 'Imagine' section)
 <br><br>So...<br>Now you're well versed in both how research influences university rankings and the data science pipeline. With this tutorial you could perform your own analyses on how publication affects other ranking systems (U.S. News and World Report?) or any data driven question. Curious about how poverty in America vs the rest of the world? The effect of temperature on NFL football games? Use these tools to master data and extract meaning from the world around you!<br><br>For a more comprehensive look at data science and machine learning, there are many online classes. Here are a couple highly regarded classses:<br><a href="https://www.class-central.com/course/udacity-intro-to-data-analysis-4937">https://www.class-central.com/course/udacity-intro-to-data-analysis-4937</a><br><a href="https://www.udemy.com/machinelearning/">https://www.udemy.com/machinelearning/</a><br><a href="https://www.udemy.com/data-science-and-machine-learning-with-python-hands-on/">https://www.udemy.com/data-science-and-machine-learning-with-python-hands-on/</a></p>
 
 </div>
