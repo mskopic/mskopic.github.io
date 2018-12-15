@@ -11804,7 +11804,9 @@ This problem is important for for serveral reasons. One, choosing a university i
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="2.-Data-Collection">2. Data Collection<a class="anchor-link" href="#2.-Data-Collection">&#182;</a></h2><p>The first step in the data science pipeline is data collection and organization. We scraped (Def: data scraping- using code to extract data from another program) data from <a href="https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv">https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv</a> . An important aspect of data scraping is its human readability. A csv file (Def: CSV- comma separated values) organizes rows of a data table by separating each data entry with a comma. We read our data into a python data structure called a dataframe in order to more easily work with the data.</p>
+<h2 id="2.-Data-Collection-and-Organization">2. Data Collection and Organization<a class="anchor-link" href="#2.-Data-Collection-and-Organization">&#182;</a></h2><p>The first step in the data science pipeline is data collection and organization. We scraped (Def: data scraping- using code to extract data from another program) data from csrankings.org (see link below). This data contains the raw data used to create this sources Top 20 CS schools rankings. It includes information on professors, their publications, their associated universities, and the area of research. An important aspect of data scraping is its human readability. A csv file (Def: CSV- comma separated values) organizes rows of a data table by separating each data entry with a comma. We read our data into a python data structure called a dataframe in order to more easily work with the data.
+<br>Follow the steps below to see how we scraped, cleased, and organizaed our data.
+<br><br>Data came from: <a href="https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv">https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv</a></p>
 
 </div>
 </div>
@@ -11831,41 +11833,20 @@ This problem is important for for serveral reasons. One, choosing a university i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv&quot;</span>
-</pre></div>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#read the top 20 rankings from csrankings.org (data was copied from the website to a csv)</span>
+<span class="n">top_20_universities_rank</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;top_20_cs_schools.csv&quot;</span><span class="p">)</span>
 
-</div>
-</div>
-</div>
+<span class="c1">#remove unnecesary columns</span>
+<span class="n">top_20_universities_rank</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">top_20_universities_rank</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;faculty&#39;</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">prof_names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="c1">#prof_names.head()</span>
-</pre></div>
+<span class="c1">#get the list of top 20 schools</span>
+<span class="n">top_20</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">top_20_universities_rank</span><span class="p">[</span><span class="s1">&#39;University&#39;</span><span class="p">])</span>
 
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">professor_publication_info_csv</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv&quot;</span>
-<span class="n">professor_publication_info</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">professor_publication_info_csv</span><span class="p">)</span>
-<span class="n">professor_publication_info</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="c1">#professor_publication_info.drop(&#39;area&#39;,axis = 1, inplace = True) #left this in because it will be important</span>
-<span class="n">professor_publication_info</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">top_20_universities_rank</span>
 </pre></div>
 
 </div>
@@ -11878,7 +11859,7 @@ This problem is important for for serveral reasons. One, choosing a university i
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[6]:</div>
+<div class="prompt output_prompt">Out[85]:</div>
 
 
 
@@ -11901,505 +11882,113 @@ This problem is important for for serveral reasons. One, choosing a university i
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>dept</th>
-      <th>area</th>
-      <th>count</th>
-      <th>adjustedcount</th>
-      <th>year</th>
+      <th>Rank</th>
+      <th>University</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Imperial College London</td>
-      <td>icra</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>2016</td>
+      <td>1</td>
+      <td>Carnegie Mellon University</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Istanbul Technical University</td>
-      <td>acl</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>2007</td>
+      <td>2</td>
+      <td>Massachusetts Institute of Technology</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>VU Amsterdam</td>
-      <td>ijcai</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>2007</td>
+      <td>3</td>
+      <td>Stanford University</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Bilkent University</td>
-      <td>ismb</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>2014</td>
+      <td>4</td>
+      <td>University of California - Berkeley</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>George Mason University</td>
-      <td>fse</td>
-      <td>1.0</td>
-      <td>0.166667</td>
-      <td>2016</td>
+      <td>5</td>
+      <td>Univ. of Illinois at Urbana-Champaign</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>George Mason University</td>
-      <td>icse</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>1993</td>
+      <td>6</td>
+      <td>University of Michigan</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>George Mason University</td>
-      <td>issta</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>1993</td>
+      <td>7</td>
+      <td>Cornell University</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>George Mason University</td>
-      <td>issta</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>1996</td>
+      <td>8</td>
+      <td>University of Washington</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>George Mason University</td>
-      <td>pldi</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>1987</td>
+      <td>9</td>
+      <td>Georgia Institute of Technology</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>Colorado State University</td>
-      <td>ics</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>1987</td>
+      <td>10</td>
+      <td>University of California - San Diego</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>Colorado State University</td>
-      <td>isca</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>1992</td>
+      <td>11</td>
+      <td>University of Maryland - College Park</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>Colorado State University</td>
-      <td>micro</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>1991</td>
+      <td>12</td>
+      <td>University of Wisconsin - Madison</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>Colorado State University</td>
-      <td>micro</td>
-      <td>1.0</td>
-      <td>0.250000</td>
-      <td>1993</td>
+      <td>13</td>
+      <td>Columbia University</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>University of Illinois at Chicago</td>
-      <td>acl</td>
-      <td>1.0</td>
-      <td>0.200000</td>
-      <td>2012</td>
+      <td>14</td>
+      <td>University of Pennsylvania</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>University of Illinois at Chicago</td>
-      <td>cav</td>
-      <td>1.0</td>
-      <td>0.250000</td>
-      <td>1990</td>
+      <td>15</td>
+      <td>University of Southern California</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>University of Illinois at Chicago</td>
-      <td>cav</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>1991</td>
+      <td>15</td>
+      <td>University of Texas at Austin</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>University of Illinois at Chicago</td>
-      <td>cav</td>
-      <td>2.0</td>
-      <td>0.833333</td>
-      <td>1993</td>
+      <td>17</td>
+      <td>Northeastern University</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>University of Illinois at Chicago</td>
-      <td>cav</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>1994</td>
+      <td>18</td>
+      <td>Princeton University</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>University of Illinois at Chicago</td>
-      <td>cav</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>1995</td>
+      <td>18</td>
+      <td>University of California - Los Angeles</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>University of Illinois at Chicago</td>
-      <td>cav</td>
-      <td>2.0</td>
-      <td>1.500000</td>
-      <td>1997</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>University of Illinois at Chicago</td>
-      <td>cav</td>
-      <td>1.0</td>
-      <td>0.250000</td>
-      <td>1998</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>University of Illinois at Chicago</td>
-      <td>cav</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>2001</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>University of Illinois at Chicago</td>
-      <td>cav</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>2011</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>University of Illinois at Chicago</td>
-      <td>cav</td>
-      <td>1.0</td>
-      <td>0.250000</td>
-      <td>2018</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>University of Illinois at Chicago</td>
-      <td>focs</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>1983</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>University of Illinois at Chicago</td>
-      <td>icde</td>
-      <td>2.0</td>
-      <td>0.583333</td>
-      <td>1997</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>University of Illinois at Chicago</td>
-      <td>icde</td>
-      <td>1.0</td>
-      <td>0.250000</td>
-      <td>1998</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>University of Illinois at Chicago</td>
-      <td>lics</td>
-      <td>2.0</td>
-      <td>1.000000</td>
-      <td>1987</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>University of Illinois at Chicago</td>
-      <td>lics</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>2008</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>University of Illinois at Chicago</td>
-      <td>lics</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>2016</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>101567</th>
-      <td>University of California - Santa Barbara</td>
-      <td>icde</td>
-      <td>1.0</td>
-      <td>0.250000</td>
-      <td>2007</td>
-    </tr>
-    <tr>
-      <th>101568</th>
-      <td>University of California - Santa Barbara</td>
-      <td>recomb</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>2001</td>
-    </tr>
-    <tr>
-      <th>101569</th>
-      <td>University of Bath</td>
-      <td>icml</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>2004</td>
-    </tr>
-    <tr>
-      <th>101570</th>
-      <td>University of Bath</td>
-      <td>icml</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>2005</td>
-    </tr>
-    <tr>
-      <th>101571</th>
-      <td>University of Bath</td>
-      <td>icml</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>2006</td>
-    </tr>
-    <tr>
-      <th>101572</th>
-      <td>University of Bath</td>
-      <td>icml</td>
-      <td>1.0</td>
-      <td>0.333333</td>
-      <td>2016</td>
-    </tr>
-    <tr>
-      <th>101573</th>
-      <td>University of Bath</td>
-      <td>ijcai</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>2005</td>
-    </tr>
-    <tr>
-      <th>101574</th>
-      <td>University of Bath</td>
-      <td>kdd</td>
-      <td>1.0</td>
-      <td>0.166667</td>
-      <td>2005</td>
-    </tr>
-    <tr>
-      <th>101575</th>
-      <td>University of Bath</td>
-      <td>nips</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>2008</td>
-    </tr>
-    <tr>
-      <th>101576</th>
-      <td>University of Bath</td>
-      <td>nips</td>
-      <td>1.0</td>
-      <td>1.000000</td>
-      <td>2013</td>
-    </tr>
-    <tr>
-      <th>101577</th>
-      <td>University of Bath</td>
-      <td>nips</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>2015</td>
-    </tr>
-    <tr>
-      <th>101578</th>
-      <td>Bilkent University</td>
-      <td>sigir</td>
-      <td>1.0</td>
-      <td>0.200000</td>
-      <td>2011</td>
-    </tr>
-    <tr>
-      <th>101579</th>
-      <td>Bilkent University</td>
-      <td>vldb</td>
-      <td>1.0</td>
-      <td>0.166667</td>
-      <td>2002</td>
-    </tr>
-    <tr>
-      <th>101580</th>
-      <td>Georgia Institute of Technology</td>
-      <td>hpdc</td>
-      <td>1.0</td>
-      <td>0.166667</td>
-      <td>2003</td>
-    </tr>
-    <tr>
-      <th>101581</th>
-      <td>Georgia Institute of Technology</td>
-      <td>hpdc</td>
-      <td>2.0</td>
-      <td>0.309524</td>
-      <td>2004</td>
-    </tr>
-    <tr>
-      <th>101582</th>
-      <td>Georgia Institute of Technology</td>
-      <td>hpdc</td>
-      <td>1.0</td>
-      <td>0.142857</td>
-      <td>2006</td>
-    </tr>
-    <tr>
-      <th>101583</th>
-      <td>Georgia Institute of Technology</td>
-      <td>hpdc</td>
-      <td>1.0</td>
-      <td>0.250000</td>
-      <td>2010</td>
-    </tr>
-    <tr>
-      <th>101584</th>
-      <td>Georgia Institute of Technology</td>
-      <td>hpdc</td>
-      <td>1.0</td>
-      <td>0.100000</td>
-      <td>2018</td>
-    </tr>
-    <tr>
-      <th>101585</th>
-      <td>Georgia Institute of Technology</td>
-      <td>ics</td>
-      <td>1.0</td>
-      <td>0.166667</td>
-      <td>2008</td>
-    </tr>
-    <tr>
-      <th>101586</th>
-      <td>Georgia Institute of Technology</td>
-      <td>kdd</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>2018</td>
-    </tr>
-    <tr>
-      <th>101587</th>
-      <td>Georgia Institute of Technology</td>
-      <td>sc</td>
-      <td>1.0</td>
-      <td>0.500000</td>
-      <td>2001</td>
-    </tr>
-    <tr>
-      <th>101588</th>
-      <td>Georgia Institute of Technology</td>
-      <td>sc</td>
-      <td>1.0</td>
-      <td>0.142857</td>
-      <td>2002</td>
-    </tr>
-    <tr>
-      <th>101589</th>
-      <td>Georgia Institute of Technology</td>
-      <td>sc</td>
-      <td>1.0</td>
-      <td>0.166667</td>
-      <td>2003</td>
-    </tr>
-    <tr>
-      <th>101590</th>
-      <td>Georgia Institute of Technology</td>
-      <td>sc</td>
-      <td>1.0</td>
-      <td>0.166667</td>
-      <td>2005</td>
-    </tr>
-    <tr>
-      <th>101591</th>
-      <td>Georgia Institute of Technology</td>
-      <td>sc</td>
-      <td>2.0</td>
-      <td>0.325000</td>
-      <td>2006</td>
-    </tr>
-    <tr>
-      <th>101592</th>
-      <td>Georgia Institute of Technology</td>
-      <td>sc</td>
-      <td>1.0</td>
-      <td>0.142857</td>
-      <td>2008</td>
-    </tr>
-    <tr>
-      <th>101593</th>
-      <td>Georgia Institute of Technology</td>
-      <td>sc</td>
-      <td>1.0</td>
-      <td>0.111111</td>
-      <td>2013</td>
-    </tr>
-    <tr>
-      <th>101594</th>
-      <td>Georgia Institute of Technology</td>
-      <td>vldb</td>
-      <td>1.0</td>
-      <td>0.200000</td>
-      <td>2013</td>
-    </tr>
-    <tr>
-      <th>101595</th>
-      <td>Georgia Institute of Technology</td>
-      <td>www</td>
-      <td>1.0</td>
-      <td>0.250000</td>
-      <td>2013</td>
-    </tr>
-    <tr>
-      <th>101596</th>
-      <td>Georgia Institute of Technology</td>
-      <td>www</td>
-      <td>1.0</td>
-      <td>0.250000</td>
-      <td>2015</td>
+      <td>20</td>
+      <td>Purdue University</td>
     </tr>
   </tbody>
 </table>
-<p>101597 rows × 5 columns</p>
 </div>
 </div>
 
@@ -12411,36 +12000,10 @@ This problem is important for for serveral reasons. One, choosing a university i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#</span>
-<span class="n">undergraduate_number_cs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;undergraduate_cs_research.csv&quot;</span><span class="p">)</span>
-<span class="c1">#</span>
-<span class="n">top20_US_Universities</span> <span class="o">=</span> \
-<span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;dept&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;Carnegie Mellon University&#39;</span>
-                                                                                            <span class="p">,</span><span class="s1">&#39;Massachusetts Institute of Technology&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;University of California - Berkeley&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;Stanford University&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;Univ. of Illinois at Urbana-Champaign&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;Cornell University&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;University of Washington&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;Georgia Institute of Technology&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;Princeton University&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;University of Texas at Austin&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;California Institute of Technology&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;University of Michigan&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;Columbia University&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;University of California - Los Angeles&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;University of Wisconsin - Madison&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;Harvard University&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;University of California - San Diego&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;University of Maryland - College Park&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;University of Pennsylvania&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;Purdue University&#39;</span>
-                                                                                           <span class="p">,</span><span class="s1">&#39;Yale University&#39;</span><span class="p">])]</span>
-<span class="n">final_dataframe</span> <span class="o">=</span> <span class="n">top20_US_Universities</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;dept&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dept</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
-<span class="n">final_dataframe</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/csrankings.csv&quot;</span>
 </pre></div>
 
 </div>
@@ -12450,10 +12013,11 @@ This problem is important for for serveral reasons. One, choosing a university i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">prof_names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">prof_names</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12466,35 +12030,74 @@ This problem is important for for serveral reasons. One, choosing a university i
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[11]:</div>
+<div class="prompt output_prompt">Out[15]:</div>
 
 
 
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<div class="output_text output_subarea output_execute_result">
-<pre>dept
-California Institute of Technology         273
-Carnegie Mellon University                3557
-Columbia University                       1153
-Cornell University                        1704
-Georgia Institute of Technology           1763
-Harvard University                         644
-Massachusetts Institute of Technology     2157
-Princeton University                      1136
-Purdue University                          883
-Stanford University                       2080
-Univ. of Illinois at Urbana-Champaign     1883
-University of California - Berkeley       2271
-University of California - Los Angeles    1013
-University of California - San Diego      1443
-University of Maryland - College Park     1283
-University of Michigan                    1743
-University of Pennsylvania                1190
-University of Texas at Austin              994
-University of Washington                  1638
-University of Wisconsin - Madison         1125
-Yale University                            487
-Name: dept, dtype: int64</pre>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>affiliation</th>
+      <th>homepage</th>
+      <th>scholarid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A. Aldo Faisal</td>
+      <td>Imperial College London</td>
+      <td>https://www.imperial.ac.uk/people/a.faisal</td>
+      <td>WjHjbrwAAAAJ</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>A. Antony Franklin</td>
+      <td>IIT Hyderabad</td>
+      <td>http://www.iith.ac.in/~antony/index.html</td>
+      <td>LVfqLuoAAAAJ</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>A. C. Cem Say</td>
+      <td>Boğaziçi University</td>
+      <td>https://www.cmpe.boun.edu.tr/~say</td>
+      <td>rOum2XsAAAAJ</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>A. C. W. Finkelstein</td>
+      <td>University College London</td>
+      <td>http://www0.cs.ucl.ac.uk/staff/A.Finkelstein</td>
+      <td>n8xuCVkAAAAJ</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>A. Cüneyd Tantug</td>
+      <td>Istanbul Technical University</td>
+      <td>http://tantug.com</td>
+      <td>TTawdWMAAAAJ</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 
 </div>
@@ -12502,6 +12105,384 @@ Name: dept, dtype: int64</pre>
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, we read data from <a href="https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv">https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv</a> <br>Potential problem: This data could contain entires we don't need or could have invalid entires (for example, if an entry does not contain a value for publication area). <br>Solution: cleanse the data. Cleansing data is a way to remove any invalid or unwanted data. It is also a way to ensure the data we're using wil give us the most relevant and valid results.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#read data from csv file into a pandas dataframe</span>
+<span class="n">professor_publication_info_csv</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/emeryberger/CSrankings/gh-pages/generated-author-info.csv&quot;</span>
+<span class="n">professor_publication_info</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">professor_publication_info_csv</span><span class="p">)</span>
+
+<span class="c1">#drop the professor&#39;s name from the table as we don&#39;t need this information</span>
+<span class="n">professor_publication_info</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#drop the count and adjustedcount fields. They are not relevant to our analysis</span>
+<span class="n">professor_publication_info</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">professor_publication_info</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;adjustedcount&#39;</span><span class="p">,</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#rename the column label from &#39;dept&#39; to &#39;university&#39; because it better represents how we understand the data</span>
+<span class="n">professor_publication_info</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dept&quot;</span><span class="p">:</span><span class="s2">&quot;university&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#rename the column label from &#39;area&#39; to &#39;research area&#39; because it better represents how we understand the data</span>
+<span class="n">professor_publication_info</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;area&quot;</span><span class="p">:</span><span class="s2">&quot;research area&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">professor_publication_info</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1">#This (below) is not important for us. duplicate professors is fine</span>
+<span class="c1">#print(professor_publication_info[&#39;research area&#39;].unique())</span>
+<span class="c1">#print(len(professor_publication_info[&#39;name&#39;]))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[104]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>university</th>
+      <th>research area</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Imperial College London</td>
+      <td>icra</td>
+      <td>2016</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Istanbul Technical University</td>
+      <td>acl</td>
+      <td>2007</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>VU Amsterdam</td>
+      <td>ijcai</td>
+      <td>2007</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Bilkent University</td>
+      <td>ismb</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>George Mason University</td>
+      <td>fse</td>
+      <td>2016</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The next step of cleansing the data set is to remove all entires that aren't ranked in the top 20 universities. We show the significance of this step by printing the total number of entries and then the number of remaining entries after we cleanse the unwanted entries. All of that unwanted data would invalidate any data analysis.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[105]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries before cleansing by year: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
+
+<span class="n">valid_years</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2008&#39;</span><span class="p">,</span> <span class="s1">&#39;2009&#39;</span><span class="p">,</span> <span class="s1">&#39;2010&#39;</span><span class="p">,</span> <span class="s1">&#39;2011&#39;</span><span class="p">,</span> <span class="s1">&#39;2012&#39;</span><span class="p">,</span> <span class="s1">&#39;2013&#39;</span><span class="p">,</span> <span class="s1">&#39;2014&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;2016&#39;</span><span class="p">,</span> <span class="s1">&#39;2017&#39;</span><span class="p">,</span> <span class="s1">&#39;2018&#39;</span><span class="p">]</span>
+
+<span class="c1">#first step is to drop all the entries with data older than 2008</span>
+<span class="n">professor_publication_info</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">valid_years</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries after cleansing by year: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Number of total entries before cleansing by year: 101597
+Number of total entries after cleansing by year: 61801
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[106]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#this section of cleansing will remove any data from a university not in the top 20</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries after cleansing by uni: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
+
+<span class="c1">#dropping anything not related to top 20 universities</span>
+<span class="n">professor_publication_info</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;university&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">top_20</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries after cleansing by uni: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Number of total entries after cleansing by uni: 61801
+Number of total entries after cleansing by uni: 17593
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As we can see, the cleansing was an extrememly important to reducing the number of data entires from 101597 to 17593. Now we're left with data relating only to publications at the top 20 universities from the past 10 years (2008-2018)<br><br>The next step is to ensure there is no missing data. We do this by checking the unique values of each column. If there is something unexpected, such as a 'research area' entry which is not one validated on csrankings.com, we should remove that entry. We accomplish this by looking at the output of unique entries and looking for anything invalid.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[107]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="c1">#by checking which research areas are used to calculate ranking, we found that:</span>
+<span class="c1">#pets is not tracked</span>
+<span class="c1">#chiconf not tracked</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries before cleansing untracked research areas: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
+<span class="n">untracked_publications</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">untracked</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pets&#39;</span><span class="p">,</span> <span class="s1">&#39;chiconf&#39;</span><span class="p">]</span>
+<span class="n">untracked_publications</span> <span class="o">=</span> <span class="n">untracked_publications</span><span class="p">[</span><span class="n">untracked_publications</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">untracked</span><span class="p">)]</span>
+<span class="n">professor_publication_info</span> <span class="o">=</span> <span class="n">professor_publication_info</span><span class="p">[</span><span class="o">~</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;research area&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">untracked</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of total entries after cleansing untracked research areas: {len(professor_publication_info)}&#39;</span><span class="p">)</span>
+
+<span class="n">untracked_publications</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Number of total entries before cleansing untracked research areas: 17593
+Number of total entries after cleansing untracked research areas: 16826
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[107]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>university</th>
+      <th>research area</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1489</th>
+      <td>University of Washington</td>
+      <td>chiconf</td>
+      <td>2010</td>
+    </tr>
+    <tr>
+      <th>1490</th>
+      <td>University of Washington</td>
+      <td>chiconf</td>
+      <td>2011</td>
+    </tr>
+    <tr>
+      <th>1491</th>
+      <td>University of Washington</td>
+      <td>chiconf</td>
+      <td>2012</td>
+    </tr>
+    <tr>
+      <th>1836</th>
+      <td>University of Michigan</td>
+      <td>chiconf</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>1837</th>
+      <td>University of Michigan</td>
+      <td>chiconf</td>
+      <td>2016</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When looking for invalid data, we found two areas of research which were not part of the set of areas which were considered in the rankings. So, we added these to a new dataframe. We also removed those entries from the main publication data table.<br>We did this because it raises the question of why these research areas are not considered. Later, we will look at how much this missing data affects ranking.<br><br>
+Now that the data is cleansed and organized, we're ready to move onto the next phase of the data science pipeline: Exploratory Data Analysis</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#</span>
+<span class="n">undergraduate_number_cs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;undergraduate_cs_research.csv&quot;</span><span class="p">)</span>
+<span class="n">undergraduate_number_cs</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;dept&quot;</span><span class="p">:</span><span class="s2">&quot;university&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">top20_US_Universities</span> <span class="o">=</span> \
+<span class="n">professor_publication_info</span><span class="p">[</span><span class="n">professor_publication_info</span><span class="p">[</span><span class="s1">&#39;university&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">top_20</span><span class="p">)]</span><span class="c1">#[&#39;Carnegie Mellon University&#39;</span>
+                                                                                 <span class="c1">#           ,&#39;Massachusetts Institute of Technology&#39;</span>
+                                                                                  <span class="c1">###       ,&#39;Univ. of Illinois at Urbana-Champaign&#39;</span>
+                                                                                     <span class="c1">##     ,&#39;University of Washington&#39;</span>
+                                                                                       <span class="c1">#    ,&#39;Georgia Institute of Technology&#39;</span>
+                                                                                        <span class="c1">#   ,&#39;Princeton University&#39;</span>
+                                                                                         <span class="c1">## ,&#39;California Institute of Technology&#39;</span>
+                                                                                      <span class="c1">#     ,&#39;University of Michigan&#39;</span>
+                                                                                       <span class="c1">#    ,&#39;Columbia University&#39;</span>
+                                                                                        <span class="c1">#   ,&#39;University of California - Los Angeles&#39;</span>
+                                                                                         <span class="c1">#  ,&#39;University of Wisconsin - Madison&#39;</span>
+                                                                                          <span class="c1"># ,&#39;Harvard University&#39;</span>
+                                                                                  <span class="c1">#         #,&#39;University of California - San Diego&#39;</span>
+                                                                                   <span class="c1">#        ,&#39;University of Maryland - College Park&#39;</span>
+                                                                                    <span class="c1">#       ,&#39;University of Pennsylvania&#39;</span>
+                                                                                     <span class="c1">#      ,&#39;Purdue University&#39;</span>
+                                                                                      <span class="c1">#     ,&#39;Yale University&#39;])]</span>
+<span class="n">final_dataframe</span> <span class="o">=</span> <span class="n">top20_US_Universities</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;university&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">university</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="c1">#final_dataframe</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Exploratory-Data-Anlysis">3. Exploratory Data Anlysis<a class="anchor-link" href="#3.-Exploratory-Data-Anlysis">&#182;</a></h2><p>This step of the data science pipeline is for getting a sense of the data and what possible meaning could be extracted from it. This is done through a variety of methods, but most commonly done by visualizing the data in charts and graphs. In this step, we will not be answering the question of CS rankings and research, just representing important aspects of the data which we may or may not use for our analysis.<br><br></p>
+
+</div>
+</div>
 </div>
     </div>
   </div>
